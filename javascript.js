@@ -2,6 +2,10 @@ const playerText = document.querySelector("#playerText");
 const computerText = document.querySelector("#computerText");
 const resultText = document.querySelector("#resultText");
 
+const playerAmtText = document.querySelector("#playerAmt");
+const compAmtText = document.querySelector("#compAmt");
+
+
 const winAmt = document.querySelector("#winAmt");
 const lossAmt = document.querySelector("#lossAmt");
 const drawAmt = document.querySelector("#drawAmt");
@@ -10,11 +14,13 @@ const choiceBtns = document.querySelectorAll(".choiceBtn");
 
 let player;
 let computer;
+let playerWin = 0;
+let compWin = 0;
 let result;
 
-let win;
-let loss;
-let draw;
+let win = 0;
+let loss = 0;
+let draw = 0;
 
 choiceBtns.forEach(buttons => buttons.addEventListener("click", () => {
 
@@ -22,12 +28,21 @@ choiceBtns.forEach(buttons => buttons.addEventListener("click", () => {
     computerTurn();
     playerText.textContent = `Player: ${player}`;
     computerText.textContent = `Computer: ${computer}`;
+
+    
+    
+    
+    computeWLD();
+    playerAmtText.textContent = `Player: ${playerWin}`;
+    compAmtText.textContent = `Computer: ${compWin}`;
     resultText.textContent = checkWinner();
 
-    computeWLD();
-    winAmt.textContent = `Wins: ${win}`;
-    lossAmt.textContent = `Loss: ${loss}`;
-    drawAmt.textContent = `Draw: ${draw}`;
+    if(playerWin>5 ){
+        reset();
+    }
+    if(compWin>5){
+        reset();
+    }
 
 }))
 
@@ -52,25 +67,54 @@ function computerTurn(){
 }
 
 function checkWinner(){
-    if(player == computer){
-        return 'Draw!'
-    } else if(computer == 'ROCK'){
-        return(player == 'PAPER' ? 'Congrats! You Won!' : 'You Lost!');
-    } else if(computer == 'PAPER'){
-        return(player == 'SCISSORS' ? 'Congrats! You Won!' : 'You Lost!');
-    } else if(computer == 'SCISSORS'){
-        return(player == 'ROCK' ? 'Congrats! You Won!' : 'You Lost!');
+    // if(player == computer){
+    //     return 'Draw!'
+    // } else if(computer == 'ROCK'){
+    //     return(player == 'PAPER' ? 'Congrats! You Won!' : 'You Lost!');
+    // } else if(computer == 'PAPER'){
+    //     return(player == 'SCISSORS' ? 'Congrats! You Won!' : 'You Lost!');
+    // } else if(computer == 'SCISSORS'){
+    //     return(player == 'ROCK' ? 'Congrats! You Won!' : 'You Lost!');
+    // }
+
+    if (playerWin == 5){
+        return 'Congrats! Player has won!'
+    }
+    else if(compWin == 5){
+        return 'Player has lost!'
     }
 }
 
 function computeWLD(){
     if(player == computer){
-        return draw = draw+1;
+        playerWin += 1;
+        compWin += 1;
+        // return draw = draw+1;
     } else if(computer == 'ROCK'){
-        return(player == 'PAPER' ? win= win+1 : loss=loss+1);
+        return(player == 'PAPER' ? playerWin= playerWin+1 : compWin=compWin+1);
     } else if(computer == 'PAPER'){
-        return(player == 'SCISSORS' ?  win= win+1 : loss=loss+1);
+        return(player == 'SCISSORS' ?  playerWin= playerWin+1 : compWin=compWin+1);
     } else if(computer == 'SCISSORS'){
-        return(player == 'ROCK' ?  win= win+1 : loss=loss+1);
+        return(player == 'ROCK' ?  playerWin= playerWin+1 : compWin=compWin+1);
     }
+}
+
+function resetPopup(){
+    if(confirm("Would you like to try again?") ){
+        reset(); 
+    }
+    else{
+        alert("do nothing");
+    }
+}
+
+function reset(){
+    console.log("does it work");
+    playerWin =0;
+    compWin=0;
+    playerAmtText.textContent = `Player: ${playerWin}`;
+    compAmtText.textContent = `Computer: ${compWin}`;
+    playerText.textContent = `Player: `;
+    computerText.textContent = `Computer: `;
+    resultText.textContent = '';
 }

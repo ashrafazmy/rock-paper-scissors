@@ -19,3 +19,13 @@
 #computerText {
     color:lightcoral
 }
+
+.resetBtn{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#resultText{
+    min-height: 40px;
+    display: block;
+}
